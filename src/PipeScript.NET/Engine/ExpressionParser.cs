@@ -30,7 +30,7 @@ public class ExpressionParser
     private Token Expect(TokenType type)
     {
         if (Current.Type != type)
-            throw new InvalidOperationException($"Expected {type} but got {Current.Type}({Current.Value})");
+            throw new InvalidOperationException($"Expected {type} at position {_pos} but got {Current.Type}({Current.Value})");
         return Consume();
     }
 
@@ -168,6 +168,6 @@ public class ExpressionParser
             return new PropertyNode(tok.Value);
         }
 
-        throw new InvalidOperationException($"Unexpected token: {tok}");
+        throw new InvalidOperationException($"Unexpected token: {tok}. Expected a literal, identifier, or '('.");
     }
 }

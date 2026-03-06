@@ -41,7 +41,7 @@ public class UnaryNode : ExpressionNode
         {
             "-" => Negate(val),
             "!" => !(bool)Convert.ChangeType(val ?? false, typeof(bool)),
-            _ => throw new InvalidOperationException($"Unknown unary operator: {_op}")
+            _ => throw new InvalidOperationException($"Internal error: Unknown unary operator: {_op}. This should have been caught during parsing.")
         };
     }
 
@@ -100,7 +100,7 @@ public class BinaryNode : ExpressionNode
             "<" => Compare(left, right) < 0,
             ">=" => Compare(left, right) >= 0,
             "<=" => Compare(left, right) <= 0,
-            _ => throw new InvalidOperationException($"Unknown binary operator: {_op}")
+            _ => throw new InvalidOperationException($"Internal error: Unknown binary operator: {_op}. This should have been caught during parsing.")
         };
     }
 

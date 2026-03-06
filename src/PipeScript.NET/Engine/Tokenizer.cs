@@ -62,6 +62,7 @@ public class Tokenizer
 
     private Token ReadString(char quote)
     {
+        int start = _pos;
         _pos++;
         var sb = new System.Text.StringBuilder();
         while (_pos < _input.Length && _input[_pos] != quote)
@@ -87,7 +88,7 @@ public class Tokenizer
             _pos++;
         }
         if (_pos >= _input.Length)
-            throw new InvalidOperationException($"Unterminated string literal starting with {quote}.");
+            throw new InvalidOperationException($"Unterminated string literal starting at position {start} with '{quote}'.");
         _pos++;
         return new Token(TokenType.String, sb.ToString());
     }
