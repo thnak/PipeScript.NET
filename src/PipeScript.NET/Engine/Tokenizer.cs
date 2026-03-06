@@ -51,8 +51,12 @@ public class Tokenizer
     private Token ReadNumber()
     {
         int start = _pos;
-        while (_pos < _input.Length && (char.IsDigit(_input[_pos]) || _input[_pos] == '.'))
+        bool hasDot = false;
+        while (_pos < _input.Length && (char.IsDigit(_input[_pos]) || (_input[_pos] == '.' && !hasDot)))
+        {
+            if (_input[_pos] == '.') hasDot = true;
             _pos++;
+        }
         return new Token(TokenType.Number, _input[start.._pos]);
     }
 
@@ -82,7 +86,9 @@ public class Tokenizer
             }
             _pos++;
         }
-        if (_pos < _input.Length) _pos++;
+        if (_pos >= _input.Length)
+            throw new InvalidOperationException($"Unterminated string literal starting with {quote}.");
+        _pos++;
         return new Token(TokenType.String, sb.ToString());
     }
 
